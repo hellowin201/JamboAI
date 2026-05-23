@@ -214,7 +214,7 @@ jamboai:
   domains:
     admin-api: https://japi.aged100.com
     admin-ui: https://jui.aged100.com
-    customer-mobile: https://juser.raged100.com
+    customer-mobile: https://juser.aged100.com
     merchant-mobile: https://jmch.aged100.com
 
 # 防止XSS攻击

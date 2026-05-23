@@ -99,13 +99,15 @@ spring:
 spring.data:
   redis:
     # 地址
-    host: localhost
+    host: 117.72.184.110
     # 端口，默认为6379
-    port: 6379
+    port: 63791
     # 数据库索引
-    database: 0
+    database: 1
+    # redis 用户名
+    username: default
     # redis 密码必须配置
-    password: ruoyi123
+    password: "Q1y2n3A4I5!2#"
     # 连接超时时间
     timeout: 10s
     # 是否开启ssl
@@ -191,7 +193,7 @@ sms:
 --- # 三方授权
 justauth:
   # 前端外网访问地址
-  address: http://localhost:80
+  address: https://jui.aged100.com
   type:
     maxkey:
       # maxkey 服务器地址

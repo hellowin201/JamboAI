@@ -10,6 +10,8 @@ interface ImportMetaEnv {
   VITE_APP_PORT: number;
   VITE_APP_BASE_API: string;
   VITE_APP_BASE_URL: string;
+  VITE_APP_API_ORIGIN: string;
+  VITE_APP_PUBLIC_URL: string;
   VITE_APP_CONTEXT_PATH: string;
   VITE_APP_MONITOR_ADMIN: string;
   VITE_APP_SNAILJOB_ADMIN: string;

@@ -32,6 +32,15 @@ The RuoYi modules remain as the framework foundation. JamboAI business code is i
 
 ## Local Start
 
+## Deployment Domains
+
+| Entry | Domain |
+| --- | --- |
+| Admin API | `https://japi.aged100.com` |
+| Admin UI | `https://jui.aged100.com` |
+| Customer mobile | `https://juser.raged100.com` |
+| Merchant mobile | `https://jmch.aged100.com` |
+
 1. Start infrastructure:
 
 ```bash

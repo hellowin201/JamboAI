@@ -1,0 +1,16 @@
+.DS_Store
+node_modules/
+dist/
+target/
+.flattened-pom.xml
+*.log
+.idea/
+.vscode/
+.env
+backend/logs/
+backend/uploadPath/
+admin-ui/.env.local
+merchant-mobile/android/
+merchant-mobile/ios/
+customer-mobile/android/
+customer-mobile/ios/

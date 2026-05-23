@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.dromara</groupId>
+        <artifactId>ruoyi-vue-plus</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <artifactId>jamboai-modules</artifactId>
+    <packaging>pom</packaging>
+    <description>JamboAI业务模块聚合工程</description>
+
+    <modules>
+        <module>jamboai-common-domain</module>
+        <module>jamboai-platform-foundation</module>
+        <module>jamboai-communication-hub</module>
+        <module>jamboai-intelligence-gateway</module>
+        <module>jamboai-agent-runtime</module>
+        <module>jamboai-knowledge-center</module>
+        <module>jamboai-operation-center</module>
+        <module>jamboai-payment-risk-center</module>
+        <module>jamboai-unified-data-intelligence</module>
+    </modules>
+</project>

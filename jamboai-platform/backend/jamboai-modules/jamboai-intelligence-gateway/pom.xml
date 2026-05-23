@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.dromara</groupId>
+        <artifactId>jamboai-modules</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <artifactId>jamboai-intelligence-gateway</artifactId>
+    <description>JamboAI LangChain4j模型供应商、路由、Prompt和Token日志网关</description>
+    <dependencies>
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>jamboai-common-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+        </dependency>
+    </dependencies>
+</project>

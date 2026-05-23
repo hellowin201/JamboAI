@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: jamboai-postgres
+    environment:
+      POSTGRES_DB: jamboai
+      POSTGRES_USER: jamboai
+      POSTGRES_PASSWORD: jamboai
+    ports:
+      - "5432:5432"
+    volumes:
+      - jamboai-postgres-data:/var/lib/postgresql/data
+      - ../sql:/docker-entrypoint-initdb.d:ro
+
+  redis:
+    image: redis:7-alpine
+    container_name: jamboai-redis
+    ports:
+      - "6379:6379"
+
+  minio:
+    image: minio/minio:latest
+    container_name: jamboai-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: jamboai
+      MINIO_ROOT_PASSWORD: jamboai123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - jamboai-minio-data:/data
+
+volumes:
+  jamboai-postgres-data:
+  jamboai-minio-data:

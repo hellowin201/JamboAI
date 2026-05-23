@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.dromara</groupId>
+        <artifactId>jamboai-modules</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <artifactId>jamboai-knowledge-center</artifactId>
+    <description>JamboAI文档、分块、pgvector向量和FAQ知识中心</description>
+    <dependencies>
+        <dependency>
+            <groupId>org.dromara</groupId>
+            <artifactId>jamboai-common-domain</artifactId>
+        </dependency>
+    </dependencies>
+</project>

@@ -55,17 +55,146 @@ CREATE INDEX idx_sys_menu_i18n_menu_lang ON sys_menu_i18n(menu_id, language_code
 -- ============================================================
 -- 2. dict_language
 -- ============================================================
+DROP TABLE IF EXISTS dict_language CASCADE;
+CREATE TABLE dict_language (
+    language_id int8 NOT NULL,
+    language_code varchar(20) NOT NULL,
+    language_name varchar(120) NOT NULL,
+    native_name varchar(120),
+    sort_order int4 DEFAULT 0,
+    default_flag bpchar(1) DEFAULT 'N',
+    status bpchar(1) DEFAULT '0',
+    del_flag bpchar(1) DEFAULT '0',
+    create_time timestamp DEFAULT now(),
+    update_time timestamp,
+    remark varchar(500),
+    name_i18n jsonb,
+    CONSTRAINT dict_language_pkey PRIMARY KEY (language_id)
+);
 
+COMMENT ON TABLE dict_language IS '平台语言字典表，支持后台、商户端、用户端、AI回复和模板消息的语言配置';
+COMMENT ON COLUMN dict_language.language_id IS '语言ID，建议使用雪花ID或固定初始化ID';
+COMMENT ON COLUMN dict_language.language_code IS '语言编码，如 en、zh-CN、ja、ko、de、ru、fr、pt、es、ar';
+COMMENT ON COLUMN dict_language.language_name IS '语言英文名称';
+COMMENT ON COLUMN dict_language.native_name IS '语言本地名称';
+COMMENT ON COLUMN dict_language.sort_order IS '排序';
+COMMENT ON COLUMN dict_language.default_flag IS '是否默认语言：Y/N';
+COMMENT ON COLUMN dict_language.status IS '状态：0正常，1停用';
+COMMENT ON COLUMN dict_language.del_flag IS '删除标志：0正常，2删除';
+COMMENT ON COLUMN dict_language.create_time IS '创建时间';
+COMMENT ON COLUMN dict_language.update_time IS '更新时间';
+COMMENT ON COLUMN dict_language.remark IS '备注';
+COMMENT ON COLUMN dict_language.name_i18n IS '语言名称多语言JSON，如 {"zh-CN":"英语","en":"English"}';
+
+CREATE UNIQUE INDEX uk_dict_language_code ON dict_language(language_code);
 
 -- ============================================================
 -- 3. dict_currency
 -- ============================================================
+DROP TABLE IF EXISTS dict_currency CASCADE;
+CREATE TABLE dict_currency (
+    currency_id int8 NOT NULL,
+    currency_code varchar(20) NOT NULL,
+    currency_name varchar(120) NOT NULL,
+    currency_symbol varchar(40),
+    sort_order int4 DEFAULT 0,
+    default_flag bpchar(1) DEFAULT 'N',
+    status bpchar(1) DEFAULT '0',
+    del_flag bpchar(1) DEFAULT '0',
+    create_time timestamp DEFAULT now(),
+    update_time timestamp,
+    remark varchar(500),
+    name_i18n jsonb,
+    CONSTRAINT dict_currency_pkey PRIMARY KEY (currency_id)
+);
 
+COMMENT ON TABLE dict_currency IS '平台货币字典表，支持国家默认币种、支付、钱包、结算、报表展示';
+COMMENT ON COLUMN dict_currency.currency_id IS '货币ID，建议使用雪花ID或固定初始化ID';
+COMMENT ON COLUMN dict_currency.currency_code IS '货币编码，如 USD、UGX、KES、CNY';
+COMMENT ON COLUMN dict_currency.currency_name IS '货币英文名称';
+COMMENT ON COLUMN dict_currency.currency_symbol IS '货币符号，如 $、USh、¥';
+COMMENT ON COLUMN dict_currency.sort_order IS '排序';
+COMMENT ON COLUMN dict_currency.default_flag IS '是否默认货币：Y/N';
+COMMENT ON COLUMN dict_currency.status IS '状态：0正常，1停用';
+COMMENT ON COLUMN dict_currency.del_flag IS '删除标志：0正常，2删除';
+COMMENT ON COLUMN dict_currency.create_time IS '创建时间';
+COMMENT ON COLUMN dict_currency.update_time IS '更新时间';
+COMMENT ON COLUMN dict_currency.remark IS '备注';
+COMMENT ON COLUMN dict_currency.name_i18n IS '货币名称多语言JSON';
+
+CREATE UNIQUE INDEX uk_dict_currency_code ON dict_currency(currency_code);
 
 -- ============================================================
 -- 4. dict_country
 -- ============================================================
+DROP TABLE IF EXISTS dict_country CASCADE;
+CREATE TABLE dict_country (
+    country_id int8 NOT NULL,
+    country_code varchar(10) NOT NULL,
+    country_name varchar(160) NOT NULL,
+    country_name_zh varchar(160),
+    iso3 varchar(10),
+    numeric_code varchar(10),
+    phone_code varchar(40),
+    capital varchar(160),
+    native_name varchar(160),
+    currency varchar(20),
+    currency_name varchar(120),
+    currency_symbol varchar(40),
+    timezone varchar(100),
+    region_name varchar(100),
+    subregion_name varchar(100),
+    latitude numeric(12,8),
+    longitude numeric(12,8),
+    emoji varchar(20),
+    status bpchar(1) DEFAULT '0',
+    del_flag bpchar(1) DEFAULT '0',
+    create_dept int8,
+    create_by int8,
+    create_time timestamp,
+    update_by int8,
+    update_time timestamp,
+    remark varchar(500),
+    default_language varchar(20),
+    official_languages varchar(300),
+    name_i18n jsonb,
+    CONSTRAINT dict_country_pkey PRIMARY KEY (country_id)
+);
 
+COMMENT ON TABLE dict_country IS '全球国家字典表，承载国家、电话区号、首都、货币、时区、区域、坐标、多语言名称等基础信息';
+COMMENT ON COLUMN dict_country.country_id IS '国家ID，建议使用雪花ID或固定初始化ID';
+COMMENT ON COLUMN dict_country.country_code IS '国家二位编码 ISO Alpha-2，如 UG、CN、US';
+COMMENT ON COLUMN dict_country.country_name IS '国家英文名称';
+COMMENT ON COLUMN dict_country.country_name_zh IS '国家中文名称';
+COMMENT ON COLUMN dict_country.iso3 IS '国家三位编码 ISO Alpha-3';
+COMMENT ON COLUMN dict_country.numeric_code IS '国家数字编码 ISO Numeric';
+COMMENT ON COLUMN dict_country.phone_code IS '国际电话区号';
+COMMENT ON COLUMN dict_country.capital IS '首都名称';
+COMMENT ON COLUMN dict_country.native_name IS '国家本地名称';
+COMMENT ON COLUMN dict_country.currency IS '默认货币编码';
+COMMENT ON COLUMN dict_country.currency_name IS '默认货币名称';
+COMMENT ON COLUMN dict_country.currency_symbol IS '默认货币符号';
+COMMENT ON COLUMN dict_country.timezone IS '默认时区';
+COMMENT ON COLUMN dict_country.region_name IS '大洲/区域名称，如 Africa、Asia';
+COMMENT ON COLUMN dict_country.subregion_name IS '子区域名称，如 Eastern Africa';
+COMMENT ON COLUMN dict_country.latitude IS '国家中心纬度';
+COMMENT ON COLUMN dict_country.longitude IS '国家中心经度';
+COMMENT ON COLUMN dict_country.emoji IS '国家旗帜Emoji';
+COMMENT ON COLUMN dict_country.status IS '状态：0正常，1停用';
+COMMENT ON COLUMN dict_country.del_flag IS '删除标志：0正常，2删除';
+COMMENT ON COLUMN dict_country.create_dept IS '创建部门ID';
+COMMENT ON COLUMN dict_country.create_by IS '创建者ID';
+COMMENT ON COLUMN dict_country.create_time IS '创建时间';
+COMMENT ON COLUMN dict_country.update_by IS '更新者ID';
+COMMENT ON COLUMN dict_country.update_time IS '更新时间';
+COMMENT ON COLUMN dict_country.remark IS '备注';
+COMMENT ON COLUMN dict_country.default_language IS '国家默认语言编码';
+COMMENT ON COLUMN dict_country.official_languages IS '官方语言编码集合，逗号分隔';
+COMMENT ON COLUMN dict_country.name_i18n IS '国家名称10语言翻译JSON';
+
+CREATE UNIQUE INDEX uk_dict_country_code ON dict_country(country_code);
+CREATE INDEX idx_dict_country_name ON dict_country(country_name);
+CREATE INDEX idx_dict_country_region ON dict_country(region_name, subregion_name);
 
 -- ============================================================
 -- 5. dict_country_i18n
@@ -105,7 +234,63 @@ CREATE INDEX idx_dict_country_i18n_code_lang ON dict_country_i18n(country_code, 
 -- ============================================================
 -- 6. dict_city
 -- ============================================================
+DROP TABLE IF EXISTS dict_city CASCADE;
+CREATE TABLE dict_city (
+    city_id int8 NOT NULL,
+    country_id int8 NOT NULL,
+    country_code varchar(10) NOT NULL,
+    country_name varchar(160),
+    state_id int8,
+    state_code varchar(40),
+    state_name varchar(160),
+    city_name varchar(200) NOT NULL,
+    city_name_zh varchar(200),
+    native_name varchar(200),
+    latitude numeric(12,8),
+    longitude numeric(12,8),
+    timezone varchar(100),
+    population int8,
+    status bpchar(1) DEFAULT '0',
+    del_flag bpchar(1) DEFAULT '0',
+    create_dept int8,
+    create_by int8,
+    create_time timestamp,
+    update_by int8,
+    update_time timestamp,
+    remark varchar(500),
+    name_i18n jsonb,
+    CONSTRAINT dict_city_pkey PRIMARY KEY (city_id),
+    CONSTRAINT fk_dict_city_country FOREIGN KEY (country_id) REFERENCES dict_country(country_id)
+);
 
+COMMENT ON TABLE dict_city IS '全球城市字典表，承载国家、州省、城市名称、中文名、本地名、坐标、时区、人口、多语言名称等信息';
+COMMENT ON COLUMN dict_city.city_id IS '城市ID，建议优先使用 GeoNames ID 或雪花ID';
+COMMENT ON COLUMN dict_city.country_id IS '国家ID，关联 dict_country.country_id';
+COMMENT ON COLUMN dict_city.country_code IS '国家二位编码';
+COMMENT ON COLUMN dict_city.country_name IS '国家名称快照';
+COMMENT ON COLUMN dict_city.state_id IS '州/省ID，可选';
+COMMENT ON COLUMN dict_city.state_code IS '州/省编码';
+COMMENT ON COLUMN dict_city.state_name IS '州/省名称';
+COMMENT ON COLUMN dict_city.city_name IS '城市英文/默认名称';
+COMMENT ON COLUMN dict_city.city_name_zh IS '城市中文名称';
+COMMENT ON COLUMN dict_city.native_name IS '城市本地名称';
+COMMENT ON COLUMN dict_city.latitude IS '纬度';
+COMMENT ON COLUMN dict_city.longitude IS '经度';
+COMMENT ON COLUMN dict_city.timezone IS '城市时区';
+COMMENT ON COLUMN dict_city.population IS '人口数量';
+COMMENT ON COLUMN dict_city.status IS '状态：0正常，1停用';
+COMMENT ON COLUMN dict_city.del_flag IS '删除标志：0正常，2删除';
+COMMENT ON COLUMN dict_city.create_dept IS '创建部门ID';
+COMMENT ON COLUMN dict_city.create_by IS '创建者ID';
+COMMENT ON COLUMN dict_city.create_time IS '创建时间';
+COMMENT ON COLUMN dict_city.update_by IS '更新者ID';
+COMMENT ON COLUMN dict_city.update_time IS '更新时间';
+COMMENT ON COLUMN dict_city.remark IS '备注';
+COMMENT ON COLUMN dict_city.name_i18n IS '城市名称多语言JSON';
+
+CREATE INDEX idx_dict_city_country ON dict_city(country_code);
+CREATE INDEX idx_dict_city_name ON dict_city(city_name);
+CREATE INDEX idx_dict_city_state ON dict_city(country_code, state_code);
 
 -- ============================================================
 -- 7. dict_city_alias
@@ -151,12 +336,74 @@ CREATE UNIQUE INDEX uk_dict_city_alias_unique ON dict_city_alias(city_id, langua
 -- ============================================================
 -- 8. dict_timezone
 -- ============================================================
+DROP TABLE IF EXISTS dict_timezone CASCADE;
+CREATE TABLE dict_timezone (
+    timezone_id int8 NOT NULL,
+    timezone_code varchar(100) NOT NULL,
+    timezone_name varchar(160) NOT NULL,
+    utc_offset varchar(20),
+    sort_order int4 DEFAULT 0,
+    default_flag bpchar(1) DEFAULT 'N',
+    status bpchar(1) DEFAULT '0',
+    del_flag bpchar(1) DEFAULT '0',
+    create_time timestamp DEFAULT now(),
+    update_time timestamp,
+    remark varchar(500),
+    name_i18n jsonb,
+    CONSTRAINT dict_timezone_pkey PRIMARY KEY (timezone_id)
+);
 
+COMMENT ON TABLE dict_timezone IS '全球时区字典表，支撑国家默认时区、城市时区、商户营业时间、预约排班等功能';
+COMMENT ON COLUMN dict_timezone.timezone_id IS '时区ID，建议使用雪花ID或固定初始化ID';
+COMMENT ON COLUMN dict_timezone.timezone_code IS 'IANA时区编码，如 Africa/Kampala、Asia/Shanghai';
+COMMENT ON COLUMN dict_timezone.timezone_name IS '时区名称';
+COMMENT ON COLUMN dict_timezone.utc_offset IS 'UTC偏移，如 UTC+03:00';
+COMMENT ON COLUMN dict_timezone.sort_order IS '排序';
+COMMENT ON COLUMN dict_timezone.default_flag IS '是否默认：Y/N';
+COMMENT ON COLUMN dict_timezone.status IS '状态：0正常，1停用';
+COMMENT ON COLUMN dict_timezone.del_flag IS '删除标志：0正常，2删除';
+COMMENT ON COLUMN dict_timezone.create_time IS '创建时间';
+COMMENT ON COLUMN dict_timezone.update_time IS '更新时间';
+COMMENT ON COLUMN dict_timezone.remark IS '备注';
+COMMENT ON COLUMN dict_timezone.name_i18n IS '时区名称多语言JSON';
+
+CREATE UNIQUE INDEX uk_dict_timezone_code ON dict_timezone(timezone_code);
 
 -- ============================================================
 -- 9. dict_industry
 -- ============================================================
+DROP TABLE IF EXISTS dict_industry CASCADE;
+CREATE TABLE dict_industry (
+    industry_id int8 NOT NULL,
+    industry_code varchar(80) NOT NULL,
+    industry_name varchar(120) NOT NULL,
+    sort_order int4 DEFAULT 0,
+    default_flag bpchar(1) DEFAULT 'N',
+    status bpchar(1) DEFAULT '0',
+    del_flag bpchar(1) DEFAULT '0',
+    create_time timestamp DEFAULT now(),
+    update_time timestamp,
+    remark varchar(500),
+    name_i18n jsonb,
+    CONSTRAINT dict_industry_pkey PRIMARY KEY (industry_id)
+);
 
+COMMENT ON TABLE dict_industry IS '行业字典表，支撑商户行业分类、AI导购行业Prompt、运营分析和权限配置';
+COMMENT ON COLUMN dict_industry.industry_id IS '行业ID，建议使用雪花ID或固定初始化ID';
+COMMENT ON COLUMN dict_industry.industry_code IS '行业编码，如 electronics、beauty、education';
+COMMENT ON COLUMN dict_industry.industry_name IS '行业英文/默认名称';
+COMMENT ON COLUMN dict_industry.sort_order IS '排序';
+COMMENT ON COLUMN dict_industry.default_flag IS '是否默认：Y/N';
+COMMENT ON COLUMN dict_industry.status IS '状态：0正常，1停用';
+COMMENT ON COLUMN dict_industry.del_flag IS '删除标志：0正常，2删除';
+COMMENT ON COLUMN dict_industry.create_time IS '创建时间';
+COMMENT ON COLUMN dict_industry.update_time IS '更新时间';
+COMMENT ON COLUMN dict_industry.remark IS '备注';
+COMMENT ON COLUMN dict_industry.name_i18n IS '行业名称多语言JSON';
+
+CREATE UNIQUE INDEX uk_dict_industry_code ON dict_industry(industry_code);
+
+COMMIT;
 
 -- ============================================================
 -- 10. dict_data_i18n

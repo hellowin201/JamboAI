@@ -82,3 +82,13 @@ npm run dev
 The PRD 2.3/2.4 schema is stored at `infra/sql/jamboai_prd_2_3_schema_standardized_full_comments_v2_4.sql`. The database design document is preserved under `docs/`.
 
 The schema follows the core rule from PRD 2.3/2.4: do not extend RuoYi `sys_tenant` directly. JamboAI country, localization, currency, timezone, default language, payment, AI and compliance extensions are stored in `biz_base_tenant_ext`.
+
+## Architecture Documents
+
+| Document | Purpose |
+| --- | --- |
+| `docs/architecture/jamboai-overall-architecture.md` | Overall architecture, module responsibilities, multi-channel, payment, i18n and data scope rules |
+| `docs/api/jamboai-api-standard.md` | Confirmed API prefixes and naming rules |
+| `docs/roadmap/jamboai-phased-roadmap-v2.md` | Phase 0 to Phase 6 development roadmap |
+| `docs/development/codex-phase-task-template.md` | Development checklist for future Codex tasks |
+| `docs/architecture/module-boundaries.md` | Maven module and SQL table boundary mapping |

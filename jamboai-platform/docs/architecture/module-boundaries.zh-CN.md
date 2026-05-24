@@ -7,7 +7,7 @@
 - 使用 `tenant_id`、`agent_id`、`merchant_id` 和 `member_id` 作为共享业务范围。
 - 领域之间优先通过接口和 Spring Event 通信。后续替换为 MQ 时不改变领域 API。
 - LangChain4j 是模型编排层，不拥有提示词、工具、知识库或记忆数据。
-- 新增 JamboAI API 使用 `/api/sys/**`、`/api/mch/**`、`/api/usr/**`、`/api/pub/**` 和 `/api/whk/**`。
+- 新增 JamboAI API 使用 `/api/sys/**`、`/api/mch/v1/**`、`/api/usr/v1/**`、`/api/pub/**` 和 `/api/whk/**`。
 
 ## 依赖方向
 

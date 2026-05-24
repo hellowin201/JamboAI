@@ -7,7 +7,7 @@
 - Use `tenant_id`, `agent_id`, `merchant_id` and `member_id` as the shared business scope.
 - Communicate between domains with interfaces and Spring Events first. Replace Spring Event with MQ later without changing domain APIs.
 - Treat LangChain4j as the model orchestration layer, not as the owner of prompts, tools, knowledge or memory.
-- Use `/api/sys/**`, `/api/mch/**`, `/api/usr/**`, `/api/pub/**` and `/api/whk/**` for new JamboAI APIs.
+- Use `/api/sys/**`, `/api/mch/v1/**`, `/api/usr/v1/**`, `/api/pub/**` and `/api/whk/**` for new JamboAI APIs.
 
 ## Dependency Direction
 

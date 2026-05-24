@@ -7,8 +7,8 @@
 | 前缀 | 客户端 | 含义 |
 | --- | --- | --- |
 | `/api/sys/**` | `admin-ui` | 平台后台、国家租户后台、城市代理后台，以及 JamboAI 新增的后台管理 API |
-| `/api/mch/**` | `merchant-mobile` | 商户员工 API |
-| `/api/usr/**` | `customer-mobile` | 终端用户 App/H5 API |
+| `/api/mch/v1/**` | `merchant-mobile` | 带版本的商户员工 API |
+| `/api/usr/v1/**` | `customer-mobile` | 带版本的终端用户 App/H5 API |
 | `/api/pub/**` | 公共客户端 | 登录、验证码、租户初始化、公共配置等匿名或半公开 API |
 | `/api/whk/**` | 外部服务商 | WhatsApp、支付服务商和未来渠道服务商的 Webhook 回调 |
 
@@ -20,8 +20,8 @@
 
 ```text
 /api/sys/{module}/{resource}
-/api/mch/{module}/{resource}
-/api/usr/{module}/{resource}
+/api/mch/v1/{module}/{resource}
+/api/usr/v1/{module}/{resource}
 /api/pub/{module}/{resource}
 /api/whk/{provider}/{event}
 ```
@@ -31,12 +31,12 @@
 ```text
 GET    /api/sys/base/merchants
 POST   /api/sys/base/merchants
-GET    /api/mch/cmh/sessions
-POST   /api/mch/cmh/sessions/{sessionId}/messages
-GET    /api/usr/opc/goods
-POST   /api/usr/opc/orders
-POST   /api/pub/auth/mch/login
-POST   /api/pub/auth/usr/login
+GET    /api/mch/v1/cmh/sessions
+POST   /api/mch/v1/cmh/sessions/{sessionId}/messages
+GET    /api/usr/v1/opc/goods
+POST   /api/usr/v1/opc/orders
+POST   /api/pub/auth/mch/v1/login
+POST   /api/pub/auth/usr/v1/login
 POST   /api/whk/whatsapp/cloud/messages
 POST   /api/whk/pay/flutterwave/callback
 ```
@@ -64,14 +64,14 @@ POST   /api/whk/pay/flutterwave/callback
 | 客户端 | 登录 API | Token 主体 |
 | --- | --- | --- |
 | 平台后台 | `/api/pub/auth/sys/login` | `sys_user` |
-| 商户员工 | `/api/pub/auth/mch/login` | `biz_base_merchant_staff` |
-| 终端用户 | `/api/pub/auth/usr/login` | `biz_base_member` |
+| 商户员工 | `/api/pub/auth/mch/v1/login` | `biz_base_merchant_staff` |
+| 终端用户 | `/api/pub/auth/usr/v1/login` | `biz_base_member` |
 
 登录后，不同客户端调用对应根前缀：
 
 - 平台后台使用 `/api/sys/**`。
-- 商户员工使用 `/api/mch/**`。
-- 终端用户使用 `/api/usr/**`。
+- 商户员工使用 `/api/mch/v1/**`。
+- 终端用户使用 `/api/usr/v1/**`。
 
 ## Webhook 规则
 
@@ -155,15 +155,15 @@ RuoYi 自带的原生 API 不需要为了 JamboAI 命名规范而主动迁移。
 推荐做法：
 
 - RuoYi 原生系统能力保持原路径和原调用方式。
-- JamboAI 新增业务 API 统一使用 `/api/sys/**`、`/api/mch/**`、`/api/usr/**`、`/api/pub/**`、`/api/whk/**`。
+- JamboAI 新增业务 API 统一使用 `/api/sys/**`、`/api/mch/v1/**`、`/api/usr/v1/**`、`/api/pub/**`、`/api/whk/**`。
 - 只有当 JamboAI 页面需要对 RuoYi 能力增加业务约束、数据范围或聚合视图时，再新增一个 JamboAI 包装接口。
 
-## 待确认事项
+## 已确认事项
 
 | 事项 | 建议选择 | 原因 |
 | --- | --- | --- |
-| API 版本号 | 初期不增加 `/v1` | RuoYi 路由通常不带版本号，初期可通过 DTO 和兼容策略管理变化 |
+| API 版本号 | 商户端和用户端 API 增加 `/v1`：`/api/mch/v1/**`、`/api/usr/v1/**` | 商户端和用户端是独立客户端，后续可能需要更频繁地做兼容升级 |
 | RuoYi 原生 API | 保持原样，除非具体 JamboAI 扩展需要包装接口 | 降低 plus-ui 复用和 RuoYi 升级风险 |
-| 登录路径 | 使用 `/api/pub/auth/{sys|mch|usr}/login` | 登录属于公共入口，但账号主体必须分离 |
+| 登录路径 | 使用 `/api/pub/auth/sys/login`、`/api/pub/auth/mch/v1/login`、`/api/pub/auth/usr/v1/login` | 登录属于公共入口，同时分离账号主体，并给独立客户端登录接口加版本 |
 | 服务商回调 | 所有回调统一放到 `/api/whk/**`，包括支付回调 | 统一外部回调安全策略 |
 | 开放伙伴 API | 暂时预留 `/api/pub/open/**`，等真实伙伴 API 出现再设计 | 避免过早设计无实际使用场景的公开接口 |

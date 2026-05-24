@@ -15,7 +15,7 @@ Scope:
 - Use the latest 83-table SQL as the only schema baseline.
 - Keep all JamboAI business code under `org.dromara.jamboai.*`.
 - Keep Maven module names, frontend project names and documents using `jamboai`.
-- Confirm API roots: `/api/sys/**`, `/api/mch/**`, `/api/usr/**`, `/api/pub/**`, `/api/whk/**`.
+- Confirm API roots: `/api/sys/**`, `/api/mch/v1/**`, `/api/usr/v1/**`, `/api/pub/**`, `/api/whk/**`.
 - Establish business context: `tenant_id`, `agent_id`, `merchant_id`, `staff_id`, `member_id`, `channel_type`.
 - Establish adapter interfaces for WhatsApp, payment and model providers.
 - Establish mock/sandbox/production environment switch rules.

@@ -7,8 +7,8 @@ Use the following API root prefixes for all new JamboAI APIs.
 | Prefix | Client | Meaning |
 | --- | --- | --- |
 | `/api/sys/**` | `admin-ui` | Platform admin, tenant admin, city agent admin and RuoYi-compatible management APIs |
-| `/api/mch/**` | `merchant-mobile` | Merchant staff APIs |
-| `/api/usr/**` | `customer-mobile` | End user App/H5 APIs |
+| `/api/mch/v1/**` | `merchant-mobile` | Versioned merchant staff APIs |
+| `/api/usr/v1/**` | `customer-mobile` | Versioned end user App/H5 APIs |
 | `/api/pub/**` | Public clients | Public, anonymous or semi-public APIs, including login, captcha, tenant bootstrap and public config |
 | `/api/whk/**` | External providers | Webhooks from WhatsApp, payment providers and future channel providers |
 
@@ -20,8 +20,8 @@ Use short root prefixes, then keep resource names clear.
 
 ```text
 /api/sys/{module}/{resource}
-/api/mch/{module}/{resource}
-/api/usr/{module}/{resource}
+/api/mch/v1/{module}/{resource}
+/api/usr/v1/{module}/{resource}
 /api/pub/{module}/{resource}
 /api/whk/{provider}/{event}
 ```
@@ -31,12 +31,12 @@ Examples:
 ```text
 GET    /api/sys/base/merchants
 POST   /api/sys/base/merchants
-GET    /api/mch/cmh/sessions
-POST   /api/mch/cmh/sessions/{sessionId}/messages
-GET    /api/usr/opc/goods
-POST   /api/usr/opc/orders
-POST   /api/pub/auth/mch/login
-POST   /api/pub/auth/usr/login
+GET    /api/mch/v1/cmh/sessions
+POST   /api/mch/v1/cmh/sessions/{sessionId}/messages
+GET    /api/usr/v1/opc/goods
+POST   /api/usr/v1/opc/orders
+POST   /api/pub/auth/mch/v1/login
+POST   /api/pub/auth/usr/v1/login
 POST   /api/whk/whatsapp/cloud/messages
 POST   /api/whk/pay/flutterwave/callback
 ```
@@ -64,14 +64,14 @@ Recommended token separation:
 | Client | Login API | Token subject |
 | --- | --- | --- |
 | Platform admin | `/api/pub/auth/sys/login` | `sys_user` |
-| Merchant staff | `/api/pub/auth/mch/login` | `biz_base_merchant_staff` |
-| End user | `/api/pub/auth/usr/login` | `biz_base_member` |
+| Merchant staff | `/api/pub/auth/mch/v1/login` | `biz_base_merchant_staff` |
+| End user | `/api/pub/auth/usr/v1/login` | `biz_base_member` |
 
 After login, authenticated business APIs use the matching root prefix:
 
 - Platform admin uses `/api/sys/**`.
-- Merchant staff uses `/api/mch/**`.
-- End user uses `/api/usr/**`.
+- Merchant staff uses `/api/mch/v1/**`.
+- End user uses `/api/usr/v1/**`.
 
 ## Webhook Rules
 
@@ -142,14 +142,14 @@ mch:opc:order:confirm
 
 End user APIs generally rely on ownership checks instead of menu permissions.
 
-## To Confirm
+## Confirmed Decisions
 
-The following API decisions should be confirmed before Phase 1 implementation:
+The following API decisions have been confirmed for Phase 1 implementation:
 
 | Item | Recommended choice | Reason |
 | --- | --- | --- |
-| API versioning | Do not add `/v1` initially | RuoYi routes are usually unversioned; compatibility can be managed by DTOs until public partner APIs appear |
+| API versioning | Add `/v1` to merchant and customer APIs: `/api/mch/v1/**`, `/api/usr/v1/**` | Merchant and customer clients are independent apps and may need frequent compatibility updates |
 | RuoYi native APIs | Keep original RuoYi framework APIs unchanged unless a concrete JamboAI extension requires a wrapper | Reduces risk when reusing plus-ui and RuoYi internals |
-| Login path | Use `/api/pub/auth/{sys|mch|usr}/login` | Keeps login public but separates account subjects |
+| Login path | Use `/api/pub/auth/sys/login`, `/api/pub/auth/mch/v1/login`, `/api/pub/auth/usr/v1/login` | Keeps login public, separates account subjects and versions independent clients |
 | Provider callbacks | Put all provider callbacks under `/api/whk/**`, including payment callbacks | One external callback security policy |
 | Open partner API | Reserve `/api/pub/open/**` until partner API is truly needed | Avoid designing unused public API too early |

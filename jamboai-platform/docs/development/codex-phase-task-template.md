@@ -8,7 +8,7 @@ Before starting a task, identify:
 
 - Phase number and phase name.
 - Target client: `admin-ui`, `merchant-mobile`, `customer-mobile`, backend or infra.
-- Target API root: `/api/sys`, `/api/mch`, `/api/usr`, `/api/pub` or `/api/whk`.
+- Target API root: `/api/sys`, `/api/mch/v1`, `/api/usr/v1`, `/api/pub` or `/api/whk`.
 - Target module: `base`, `cmh`, `igw`, `iar`, `knc`, `opc`, `prc` or `udi`.
 - SQL tables involved.
 - Account subject: `sys_user`, `biz_base_merchant_staff` or `biz_base_member`.
@@ -30,8 +30,8 @@ Before starting a task, identify:
 ## API Rules
 
 - New platform admin APIs use `/api/sys/**`.
-- New merchant APIs use `/api/mch/**`.
-- New customer APIs use `/api/usr/**`.
+- New merchant APIs use `/api/mch/v1/**`.
+- New customer APIs use `/api/usr/v1/**`.
 - Public login/bootstrap APIs use `/api/pub/**`.
 - External provider callbacks use `/api/whk/**`.
 - Do not introduce `/api/admin/**`, `/api/merchant/**`, `/api/customer/**`, `/api/open/**` or `/api/webhook/**`.

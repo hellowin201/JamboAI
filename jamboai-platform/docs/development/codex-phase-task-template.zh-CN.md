@@ -8,7 +8,7 @@
 
 - 阶段编号和阶段名称。
 - 目标客户端：`admin-ui`、`merchant-mobile`、`customer-mobile`、后端或基础设施。
-- 目标 API 根前缀：`/api/sys`、`/api/mch`、`/api/usr`、`/api/pub` 或 `/api/whk`。
+- 目标 API 根前缀：`/api/sys`、`/api/mch/v1`、`/api/usr/v1`、`/api/pub` 或 `/api/whk`。
 - 目标模块：`base`、`cmh`、`igw`、`iar`、`knc`、`opc`、`prc` 或 `udi`。
 - 涉及的 SQL 表。
 - 账号主体：`sys_user`、`biz_base_merchant_staff` 或 `biz_base_member`。
@@ -30,8 +30,8 @@
 ## API 规则
 
 - 新的平台后台 API 使用 `/api/sys/**`。
-- 新的商户端 API 使用 `/api/mch/**`。
-- 新的用户端 API 使用 `/api/usr/**`。
+- 新的商户端 API 使用 `/api/mch/v1/**`。
+- 新的用户端 API 使用 `/api/usr/v1/**`。
 - 公共登录和初始化 API 使用 `/api/pub/**`。
 - 外部服务商回调使用 `/api/whk/**`。
 - 不引入 `/api/admin/**`、`/api/merchant/**`、`/api/customer/**`、`/api/open/**` 或 `/api/webhook/**`。

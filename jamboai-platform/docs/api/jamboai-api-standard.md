@@ -149,7 +149,7 @@ The following API decisions should be confirmed before Phase 1 implementation:
 | Item | Recommended choice | Reason |
 | --- | --- | --- |
 | API versioning | Do not add `/v1` initially | RuoYi routes are usually unversioned; compatibility can be managed by DTOs until public partner APIs appear |
-| RuoYi native APIs | Gradually expose/proxy under `/api/sys/sys/**` for new pages; avoid one-shot route migration | Reduces risk when reusing plus-ui and RuoYi internals |
+| RuoYi native APIs | Keep original RuoYi framework APIs unchanged unless a concrete JamboAI extension requires a wrapper | Reduces risk when reusing plus-ui and RuoYi internals |
 | Login path | Use `/api/pub/auth/{sys|mch|usr}/login` | Keeps login public but separates account subjects |
 | Provider callbacks | Put all provider callbacks under `/api/whk/**`, including payment callbacks | One external callback security policy |
 | Open partner API | Reserve `/api/pub/open/**` until partner API is truly needed | Avoid designing unused public API too early |
